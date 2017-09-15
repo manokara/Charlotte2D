@@ -1,0 +1,10 @@
+#pragma once
+#include "core.h"
+#include"animation.h"
+#include"engineError.h"
+#include"gamerooms.h"
+#include"graphics.h"
+#include"mediaReader.h"
+#include"objects.h"
+#include"graphics.h"
+#include"keyboard.h"
