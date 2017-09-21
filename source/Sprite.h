@@ -1,28 +1,20 @@
 #pragma once
+
+#include "Animation.h"
 #include<SFML\Graphics.hpp>
-#include "animation.h"
-#include<map>
 
-namespace miwa
-{
-	typedef sf::Sprite sSprite_t;
-
-	class Sprite : public sSprite_t
+namespace charlotte {
+	class SpriteWrapper : public sf::Sprite
 	{
 		std::map<std::string, Animation> _anim;
+		int32_t _guid = -1;
 	public:
-		Sprite(sf::Texture& tex, sf::IntRect rect);
-		Sprite();
+		SpriteWrapper(sf::Texture& tex, sf::IntRect rect);
+		SpriteWrapper();
 		Animation& makeAnimation(std::string name, int cellW, int cellH, int sepH, int sepV, size_t rangeBegin, size_t rangeEnd);
 		Animation& makeAnimation(std::string name, int cellW, int cellH, int sepH, int sepV);
 		Animation& getAnimation(std::string name);
+		int32_t getID();
 	};
-
-
-	class GameInfo
-	{
-
-	};
-
-
+	typedef SpriteWrapper Sprite;
 }

@@ -1,11 +1,11 @@
-#include"stdafx.h"
-#include"engineError.h"
+#include "stdafx.h"
+#include "Error.h"
 
-GameSysError::GameSysError(std::string errorText)
+charlotte::CharlotteError::CharlotteError(std::string errorText)
 {
 	_what = errorText;
 }
-std::string GameSysError::what()
+std::string charlotte::CharlotteError::what()
 {
 	return _what;
 }

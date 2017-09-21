@@ -2,37 +2,31 @@
 #include<SFML\Graphics.hpp>
 #include<map>
 #include<functional>
+#include "ServiceLocator.h"
+#include "EngineComponent.h"
 
-class SystemComponent
-{
-public:
-	virtual void update()
+
+namespace charlotte {
+	class InputService;
+
+	/*
+	*	Keyboard Module, a class to Keyboard Management
+	*/
+
+	class Keyboard
 	{
-
-	}
-};
-
-namespace miwa {
-	namespace input {
-		class Keyboard
+	public:
+		enum KeyStates
 		{
-		public:
-			enum KeyStates
-			{
-				Released, Release, Pressed, Press
-			};
-		protected:
-			static std::vector<KeyStates> _KeyM;
-		public:
-			Keyboard();
-
-			static KeyStates& getKeyState(const sf::Keyboard::Key& keyToGet);
+			Released, Release, Pressed, Press
 		};
 
-		class MKeyboard : public Keyboard, public SystemComponent
-		{
-		public:
-			void update();
-		};
-	}
+		Keyboard();
+
+		KeyStates& getKeyState(const sf::Keyboard::Key& keyToGet);
+	private:
+		static std::vector<KeyStates> _KeyM;
+
+		friend class InputService;
+	};
 }

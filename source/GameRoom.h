@@ -3,9 +3,8 @@
 #include<vector>
 #include<memory>
 #include<functional>
-#include "objects.h"
-
-namespace miwa {
+#include<SFML\Graphics.hpp>
+namespace charlotte {
 	class GameRoom
 	{
 		std::function<void()> _callback;
@@ -20,10 +19,4 @@ namespace miwa {
 		void execute(uint32_t fps);
 		uint32_t getFPS();
 	};
-	namespace loop {
-		void destroyObject(Object* objPtr);
-		bool findObject(Object* objPtr);
-		void clearObjects();
-		void startLoop();
-	}
 }

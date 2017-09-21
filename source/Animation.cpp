@@ -2,10 +2,13 @@
 #include<SFML\Graphics.hpp>
 #include<iostream>
 #include "animation.h"
-#include"core.h"
-#include"internal.h"
+#include "MainService.h"
+#include "ServiceLocator.h"
+#include "GraphicsService.h"
 
-miwa::Animation::Animation(sf::Sprite& sprite, int cellW, int cellH, int sepH, int sepV)
+extern charlotte::ServiceLocator globalServiceLocator;
+
+charlotte::Animation::Animation(sf::Sprite& sprite, int cellW, int cellH, int sepH, int sepV)
 {
 	_sprite = &sprite;
 	sf::Vector2u cell = sf::Vector2u(cellW + sepH, cellH + sepV);
@@ -19,7 +22,7 @@ miwa::Animation::Animation(sf::Sprite& sprite, int cellW, int cellH, int sepH, i
 	}
 }
 
-miwa::Animation::Animation(sf::Sprite& sprite, size_t cellW, size_t cellH, size_t sepH, size_t sepV, size_t rangeBegin, size_t rangeEnd)
+charlotte::Animation::Animation(sf::Sprite& sprite, size_t cellW, size_t cellH, size_t sepH, size_t sepV, size_t rangeBegin, size_t rangeEnd)
 {
 	_sprite = &sprite;
 	sf::Vector2u cell = sf::Vector2u(cellW + sepH, cellH + sepV);
@@ -35,36 +38,34 @@ miwa::Animation::Animation(sf::Sprite& sprite, size_t cellW, size_t cellH, size_
 	cells.erase(cells.begin(), cells.begin() + rangeBegin);
 }
 
-miwa::Animation::~Animation()
+charlotte::Animation::~Animation()
 {
 	
 }
 
-extern Core mainCore;
-
-sf::Sprite& miwa::Animation::getSprite()
+sf::Sprite& charlotte::Animation::getSprite()
 {
 	return *_sprite;
 }
 
 
-sf::Sprite miwa::Animation::operator[](int n)
+sf::Sprite charlotte::Animation::operator[](int n)
 {
 	return sf::Sprite(*_sprite->getTexture(), cells[n]);
 }
 
-size_t miwa::Animation::frameNumber()
+size_t charlotte::Animation::frameNumber()
 {
 	return cells.size();
 }
 
-void miwa::Animation::draw(size_t subimage, const sf::RenderStates& states)
+void charlotte::Animation::draw(size_t subimage, const sf::RenderStates& states)
 {
 	_sprite->setTextureRect(this->cells[subimage]);
-	miwa::draw(*_sprite, states);
+	globalServiceLocator.get<GraphicsService>()->draw(*_sprite, states);
 }
 
-miwa::Animation::Animation()
+charlotte::Animation::Animation()
 {
 
 }
