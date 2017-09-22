@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "ContentService.h"
-#include "mediaReader.h"
 
 charlotte::ContentService::ContentService()
 {
@@ -21,15 +20,6 @@ charlotte::ContentService::ContentService(const std::string& searchDir)
 void charlotte::ContentService::setDefaultSearchPath(const std::string& searchDir)
 {
 	_searchDir = searchDir;
-}
-
-void charlotte::ContentService::loadAssets()
-{
-	auto& map = charlotte::externalFiles::getMap();
-	for (const auto& i : map)
-	{
-		makeTextureFromBuffer(i.first, i.second.getData(), i.second.getSize());
-	}
 }
 
 sf::Sound& charlotte::ContentService::getSound(const std::string &e)

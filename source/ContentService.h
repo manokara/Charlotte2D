@@ -30,7 +30,6 @@ namespace charlotte {
 		ContentService();
 		explicit ContentService(const std::string& searchDir);
 		void setDefaultSearchPath(const std::string& searchDir);
-		void loadAssets();
 		sf::Sound& getSound(const std::string &e);
 		sf::Texture& getTexture(const std::string &e);
 		charlotte::Sprite& makeSprite(const std::string& name);
