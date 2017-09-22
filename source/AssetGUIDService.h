@@ -36,7 +36,6 @@ namespace charlotte {
 		template<typename T>
 		void insert()
 		{
-			std::cout << "inserting.." << std::endl;
 			this->_guids.insert(this->_guids.begin(), std::make_pair( typeid(T).name(), 0 ));
 		}
 	};

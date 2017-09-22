@@ -37,7 +37,7 @@ sf::Color& charlotte::GameRoom::getBackgroundColor()
 
 void charlotte::GameRoom::execute(uint32_t fps)
 {
-	this->_fps = fps;
+	this->m_fps = fps;
 	try
 	{
 		auto windowService = globalServiceLocator.get<WindowService>();
@@ -46,17 +46,17 @@ void charlotte::GameRoom::execute(uint32_t fps)
 
 		auto& room = mainService->getCurrentRoom();
 		std::vector<std::shared_ptr<charlotte::Object>> perList;
-		for (std::vector<std::shared_ptr<charlotte::Object>>::reverse_iterator iter = mainService->instanceM.rbegin(); iter < mainService->instanceM.rend(); ++iter)
+		for (std::vector<std::shared_ptr<charlotte::Object>>::reverse_iterator iter = mainService->m_instances.rbegin(); iter < mainService->m_instances.rend(); ++iter)
 		{
 			if (iter->get()->persistent)
 			{
 				perList.push_back(*iter);
 			}
 		}
-		mainService->instanceM.clear();
-		mainService->instQ.getVector().clear();
-		mainService->instanceM.swap(perList);
-		mainService->_currentRoomPtr = this;
+		mainService->m_instances.clear();
+		mainService->m_instance_queue.getVector().clear();
+		mainService->m_instances.swap(perList);
+		mainService->m_current_room_pointer = this;
 		_callback();
 	}
 	catch (const std::exception& e)
@@ -67,5 +67,5 @@ void charlotte::GameRoom::execute(uint32_t fps)
 
 uint32_t charlotte::GameRoom::getFPS()
 {
-	return this->_fps;
+	return this->m_fps;
 }

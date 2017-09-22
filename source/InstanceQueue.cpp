@@ -5,7 +5,7 @@
 bool WeakPtrForQueue::operator<(const WeakPtrForQueue& e)
 	const
 {
-	return e.lock().get()->priority > lock().get()->priority;
+	return e.lock().get()->priority < lock().get()->priority;
 }
 
 WeakPtrForQueue::WeakPtrForQueue(std::shared_ptr<charlotte::Object>& obj) : weak_ptr(obj)

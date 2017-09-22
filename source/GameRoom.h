@@ -9,7 +9,7 @@ namespace charlotte {
 	{
 		std::function<void()> _callback;
 		sf::Color backgroundColor;
-		uint32_t _fps;
+		uint32_t m_fps;
 	public:
 		void changeBackgroundColor(sf::Color color);
 		sf::Color& getBackgroundColor();

@@ -12,7 +12,6 @@ charlotte::GraphicsService::GraphicsService()
 	if (!_defaultRenderTexture)
 	{
 		auto windowService = globalServiceLocator.get<WindowService>();
-		std::cout << windowService->getSfRenderWindow() << std::endl;
 		auto windowSize = windowService->getSfRenderWindow()->getSize();
 		_defaultRenderTexture = &this->makeRenderTexture(windowSize);
 		_applicationRenderTexture = _defaultRenderTexture;

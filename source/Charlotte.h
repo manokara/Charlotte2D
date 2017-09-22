@@ -36,6 +36,7 @@ Brief->
 Brief->
 	Contains a class to facilitate access of engine services
 */
+#include "CharlotteServices.h"
 
 //	Main header(initialization function here) ->
 #include "CharlotteMain.h"

@@ -8,12 +8,12 @@
 
 namespace charlotte {
 	class ServiceLocator {
-		std::vector<Service*> services;
+		std::vector<Service*> m_services;
 	public:
 		template<typename T>
 		T& insertService(T* service)
 		{
-			auto it = (*services.insert(services.end(), (T*)service));
+			auto it = (*m_services.insert(m_services.end(), (T*)service));
 			it->typeName = typeid(T).name();
 			return (*service);
 		}
@@ -21,7 +21,7 @@ namespace charlotte {
 		T* get()
 		{
 			std::string typeName = typeid(T).name();
-			for (auto* i : services)
+			for (auto* i : m_services)
 			{
 				if (i->typeName == typeName)
 				{

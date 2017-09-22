@@ -38,14 +38,14 @@ namespace charlotte
 		friend class GameRoom;
 
 	private:
-		CharlotteServices services;
-		std::vector<std::shared_ptr<Object>> instanceM;
-		sf::Event _events;
-		uint32_t _fps = 60;
-		instanceQueue instQ;
+		CharlotteServices m_services;
+		std::vector<std::shared_ptr<Object>> m_instances;
+		sf::Event m_event;
+		uint32_t m_fps = 60;
+		instanceQueue m_instance_queue;
 		size_t watafoka;
-		size_t loopVectorPos;
-		bool selfDest = false;
-		charlotte::GameRoom* _currentRoomPtr = nullptr;
+		size_t m_loop_index;
+		bool m_loop_index_destruction = false;
+		charlotte::GameRoom* m_current_room_pointer = nullptr;
 	};
 }

@@ -31,12 +31,12 @@ charlotte::MainService::~MainService()
 
 charlotte::GameRoom& charlotte::MainService::getCurrentRoom()
 {
-	return *this->_currentRoomPtr;
+	return *this->m_current_room_pointer;
 }
 
 void charlotte::MainService::changeFrameRate(uint32_t FPS)
 {
-	_fps = FPS;
+	m_fps = FPS;
 	globalServiceLocator.get<WindowService>()->getSfRenderWindow()->setFramerateLimit(FPS);
 }
 
@@ -56,18 +56,18 @@ void charlotte::MainService::update()
 		sf::Clock deltaC;
 		while (!quit) {
 			const sf::Time deltaT = deltaC.restart();
-			windowService->getSfRenderWindow()->pollEvent(this->_events);
-			switch (this->_events.type)
+			windowService->getSfRenderWindow()->pollEvent(this->m_event);
+			switch (this->m_event.type)
 			{
 			case sf::Event::Closed:
 				windowService->getSfRenderWindow()->close();
 				quit = true;
 				break;
 			}
-			graphicsService->clear(_currentRoomPtr->getBackgroundColor());
-			for (auto& it : instanceM)
+			graphicsService->clear(m_current_room_pointer->getBackgroundColor());
+			for (auto& it : m_instances)
 			{
-				instQ.pushd(it);
+				m_instance_queue.pushd(it);
 			}
 			uint32_t sS = 0;
 			/*
@@ -75,33 +75,33 @@ void charlotte::MainService::update()
 			*/
 			inputService->update();
 
-			while (!instQ.empty())
+			while (!m_instance_queue.empty())
 			{
-				loopVectorPos = instQ.size() - 1 - sS;
-				auto& cInst = instQ.top();
-				selfDest = false;
-				if (instQ.getVector().size() > 0) {
+				m_loop_index = m_instance_queue.size() - 1 - sS;
+				auto& cInst = m_instance_queue.top();
+				m_loop_index_destruction = false;
+				if (m_instance_queue.getVector().size() > 0) {
 					/*
 					*	Call instance events
 					*/
 					if (cInst.lock()->update) {
 						cInst.lock()->update();
 					}
-					if (instQ.getVector().size() > 0) {
+					if (m_instance_queue.getVector().size() > 0) {
 						if (cInst.lock()->render) {
 							cInst.lock()->render();
 						}
 					}
 					watafoka = 0;
 				}
-				if (instQ.size() > 0 && !selfDest)
+				if (m_instance_queue.size() > 0 && !m_loop_index_destruction)
 				{
-					instQ.pop();
+					m_instance_queue.pop();
 				}
 			}
 			graphicsService->update();
 			windowService->getSfRenderWindow()->display();
-			sf::sleep(sf::milliseconds(1000.0 / static_cast<float>(mainService->_currentRoomPtr->getFPS())));
+			sf::sleep(sf::milliseconds(1000.0 / static_cast<float>(mainService->m_current_room_pointer->getFPS())));
 		}
 	}
 	catch (CharlotteError& err)
@@ -113,57 +113,57 @@ void charlotte::MainService::update()
 
 bool charlotte::MainService::findObject(Object* objPtr)
 {
-	auto iter = std::find_if(instanceM.begin(), instanceM.end(), [&objPtr](decltype(*instanceM.begin())& e) {
+	auto iter = std::find_if(m_instances.begin(), m_instances.end(), [&objPtr](decltype(*m_instances.begin())& e) {
 		return e.get() == objPtr;
 	});
-	return iter != instanceM.end();
+	return iter != m_instances.end();
 }
 
 void charlotte::MainService::destroyObject(Object* objPtr)
 {
-	auto iter = std::find_if(instanceM.begin(), instanceM.end(), [objPtr](std::weak_ptr<Object> i)
+	auto iter = std::find_if(m_instances.begin(), m_instances.end(), [objPtr](std::weak_ptr<Object> i)
 	{
 		return i.lock().get() == objPtr;
 	});
 
-	if (iter == instanceM.end())
+	if (iter == m_instances.end())
 	{
 		globalServiceLocator.get<charlotte::ErrorService>()->setError( CharlotteError("The object is not in the list of instances" ) );
 	}
 	else {
-		auto dist = static_cast<decltype(loopVectorPos)>(std::distance(instanceM.begin(), iter));
-		if (dist < loopVectorPos)
+		auto dist = static_cast<decltype(m_loop_index)>(std::distance(m_instances.begin(), iter));
+		if (dist < m_loop_index)
 		{
 			watafoka++;
 		}
-		instanceM.erase(iter);
-		auto it = std::find_if(instQ.getVector().begin(), instQ.getVector().end(), [objPtr](std::weak_ptr<Object> i)
+		m_instances.erase(iter);
+		auto it = std::find_if(m_instance_queue.getVector().begin(), m_instance_queue.getVector().end(), [objPtr](std::weak_ptr<Object> i)
 		{
 			return i.lock().get() == objPtr;
 		});
-		if (it->lock().get() == instQ.top().lock().get())
+		if (it->lock().get() == m_instance_queue.top().lock().get())
 		{
-			selfDest = true;
-			instQ.pop();
+			m_loop_index_destruction = true;
+			m_instance_queue.pop();
 		}
 	}
 }
 
 void charlotte::MainService::clearObjects()
 {
-	instanceM.clear();
-	instQ.getVector().clear();
+	m_instances.clear();
+	m_instance_queue.getVector().clear();
 }
 
 extern charlotte::ServiceLocator globalServiceLocator;
 
 void charlotte::MainService::insertObject(void* objPtr)
 {
-	instanceM.push_back(std::shared_ptr<charlotte::Object>((charlotte::Object*)objPtr));
+	m_instances.push_back(std::shared_ptr<charlotte::Object>((charlotte::Object*)objPtr));
 	auto guidService = globalServiceLocator.get<AssetGUIDService>();
 	auto n = guidService->get<charlotte::Object>();
 	guidService->increment<charlotte::Object>();
-	instanceM.back()->m_guid = n;
+	m_instances.back()->m_guid = n;
 }
 
 /*
