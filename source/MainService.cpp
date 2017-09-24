@@ -6,7 +6,7 @@
 #include "InstanceQueue.h"
 #include "keyboard.h"
 #include "ServiceLocator.h"
-#include "inputService.h"
+#include "InputService.h"
 #include "WindowService.h"
 #include "Error.h"
 #include "MainService.h"
@@ -128,7 +128,8 @@ void charlotte::MainService::destroyObject(Object* objPtr)
 
 	if (iter == m_instances.end())
 	{
-		globalServiceLocator.get<charlotte::ErrorService>()->setError( CharlotteError("The object is not in the list of instances" ) );
+		CharlotteError error("The object is not in the list of instances");
+		globalServiceLocator.get<charlotte::ErrorService>()->setError( error );
 	}
 	else {
 		auto dist = static_cast<decltype(m_loop_index)>(std::distance(m_instances.begin(), iter));

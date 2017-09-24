@@ -3,7 +3,7 @@
 #include<vector>
 #include<memory>
 #include<functional>
-#include<SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
 namespace charlotte {
 	class GameRoom
 	{

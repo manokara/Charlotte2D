@@ -23,7 +23,8 @@ sf::RenderWindow* charlotte::WindowService::getSfRenderWindow()
 {
 	if (!this->_window)
 	{
-		globalServiceLocator.get<ErrorService>()->setError(CharlotteError("No SFML Window found"));
+		CharlotteError error("No SFML Window found");
+		globalServiceLocator.get<ErrorService>()->setError(error);
 	}
 	return this->_window;
 }

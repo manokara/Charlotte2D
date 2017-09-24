@@ -1,5 +1,5 @@
 #pragma once
-#include<SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
 #include "ServiceLocator.h"
 #include "WindowService.h"
 #include "GameRoom.h"

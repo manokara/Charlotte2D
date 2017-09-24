@@ -1,5 +1,5 @@
 #pragma once
-#include<SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
 #include<map>
 #include<functional>
 #include "ServiceLocator.h"

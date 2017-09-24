@@ -1,10 +1,10 @@
 #pragma once
 
-#include<SFML\System.hpp>
+#include<SFML/System.hpp>
 #include<vector>
 #include<memory>
 #include<functional>
-#include "animation.h"
+#include "Animation.h"
 #include<map>
 #include"CharlotteServices.h"
 

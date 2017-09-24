@@ -3,7 +3,7 @@
 #include "ServiceLocator.h"
 #include "ContentService.h"
 #include "WindowService.h"
-#include "inputService.h"
+#include "InputService.h"
 #include "MainService.h"
 #include "GraphicsService.h"
 #include "ErrorService.h"

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "stdio.h"
 #include "ContentService.h"
 
 charlotte::ContentService::ContentService()
@@ -48,7 +49,8 @@ charlotte::Sprite& charlotte::ContentService::makeSprite(const std::string& name
 sf::Texture& charlotte::ContentService::makeTextureFromFile(const std::string& name, const std::string& filePath)
 {
 	auto it = _tResources.insert(_tResources.end(), std::make_pair(name, sf::Texture()));
-	it->second.loadFromFile(filePath);
+	printf("File path: %s%s\n", _searchDir.c_str(), filePath.c_str());
+	it->second.loadFromFile(_searchDir+filePath);
 	return it->second;
 }
 

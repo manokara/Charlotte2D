@@ -31,7 +31,8 @@ namespace charlotte {
 			auto errorService = this->get<ErrorService>();
 			if (errorService)
 			{
-				errorService->setError(CharlotteError("No service " + typeName + " found"));
+				CharlotteError error("No service " + typeName + " found");
+				errorService->setError(error);
 			}
 			return nullptr;
 		}

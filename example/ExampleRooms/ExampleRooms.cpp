@@ -1,9 +1,7 @@
-#include"charlotte.h"
-#include<experimental\filesystem>
+#include"Charlotte.h"
 
 namespace gamens {
 	using namespace charlotte;
-	using namespace std::experimental;
 
 	class HifumiIcon : public Object
 	{
@@ -106,7 +104,7 @@ namespace gamens {
 		}
 		void load()
 		{
-			content->setDefaultSearchPath(filesystem::current_path().string() + "Content/");
+			content->setDefaultSearchPath("Content/");
 			loadSprites();
 			loadRooms();
 		}

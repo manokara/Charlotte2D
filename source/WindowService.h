@@ -2,7 +2,7 @@
 
 #include "ServiceLocator.h"
 #include "Error.h"
-#include<SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
 #include<memory>
 #include<string>
 

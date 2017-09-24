@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include<SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
 #include<iostream>
-#include "animation.h"
+#include "Animation.h"
 #include "MainService.h"
 #include "ServiceLocator.h"
 #include "GraphicsService.h"

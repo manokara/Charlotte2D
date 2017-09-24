@@ -26,7 +26,7 @@ Brief->
 Brief->
 	Service for input access
 */
-#include "inputService.h"
+#include "InputService.h"
 /*
 Brief->
 	Service for Window management

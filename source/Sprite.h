@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Animation.h"
-#include<SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
 
 namespace charlotte {
 	class SpriteWrapper : public sf::Sprite

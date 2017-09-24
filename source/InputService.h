@@ -2,7 +2,7 @@
 
 #include "EngineComponent.h"
 #include "ServiceLocator.h"
-#include<SFML\Graphics.hpp>
+#include<SFML/Graphics.hpp>
 
 /*
 *	Input Service

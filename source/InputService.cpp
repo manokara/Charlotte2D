@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "inputService.h"
+#include "InputService.h"
 #include "keyboard.h"
 
 charlotte::Keyboard* charlotte::InputService::keyboard = nullptr;
